@@ -1,0 +1,33 @@
+{
+  "name": "sedu",
+  "version": "0.0.1",
+  "description": "A education project.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/selamidemir/sedu.git"
+  },
+  "keywords": [
+    "sedu",
+    "education"
+  ],
+  "author": "Selami Demir",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/selamidemir/sedu/issues"
+  },
+  "homepage": "https://github.com/selamidemir/sedu#readme",
+  "dependencies": {
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "nodemon": "^2.0.20"
+  }
+}
