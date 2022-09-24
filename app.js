@@ -9,14 +9,17 @@ dotenv.config();
 const port = process.env.PORT || 5000;
 const app = express();
 
+mongoose.connect('mongodb://localhost/sedu-db', () =>
+  console.log('Vertitabanı sunucusuna bağlanıldı.')
+);
+
 // Template Engine
 app.set('view engine', 'ejs');
 
 // Middleware
 app.use(express.static('public'));
-mongoose.connect('mongodb://localhost/sedu-db', () =>
-  console.log('Vertitabanı sunucusuna bağlanıldı.')
-);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/', pageRoute);

@@ -3828,8 +3828,9 @@ a.link-style3 {
 
 .course-item{
 	background: #ffffff;
+    margin-bottom: 19px;
 }
-.course-item{}
+
 .course-title > h2 {
     margin: 15px 0;
     padding: 0px;
