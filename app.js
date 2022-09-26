@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const pageRoute = require('./routes/pageRoutes');
 const courseRoute = require('./routes/courseRoutes');
+const categoryRoute = require('./routes/categoryRoutes');
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/', pageRoute);
 app.use('/courses', courseRoute);
+app.use('/categories', categoryRoute);
 
 app.listen(port, () =>
   console.log(`Suncucu ${port} nolu porttan ayağa kalktı`)

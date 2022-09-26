@@ -14,6 +14,10 @@ const CourseSchema = Schema({
     required: true,
     trim: true,
   },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+  },
   slug: {
     type: String,
     required: true,

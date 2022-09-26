@@ -1,3 +1,4 @@
+const Category = require('../models/Category');
 const Course = require('../models/Course');
 
 exports.createCourse = async (req, res) => {
@@ -17,7 +18,15 @@ exports.createCourse = async (req, res) => {
 
 exports.getAllCourses = async (req, res) => {
   try {
-    const courses = await Course.find();
+    const filter = {};
+    const categorySlug = req.query.category;
+
+    if (categorySlug) {
+      const category = await Category.findOne({ slug: categorySlug });
+      filter.category = category._id;
+    }
+
+    const courses = await Course.find(filter);
     res.status(200).render('courses', {
       courses,
       pageName: 'courses',
@@ -34,9 +43,11 @@ exports.getCourse = async (req, res) => {
   try {
     const slug = req.params.slug;
     const course = await Course.findOne({ slug: slug });
+    const categories = await Category.find();
 
     res.render('course', {
       course,
+      categories,
       pageName: 'courses',
     });
   } catch (error) {
