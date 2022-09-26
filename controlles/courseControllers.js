@@ -29,3 +29,20 @@ exports.getAllCourses = async (req, res) => {
     });
   }
 };
+
+exports.getCourse = async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const course = await Course.findOne({ slug: slug });
+
+    res.render('course', {
+      course,
+      pageName: 'courses',
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'fail',
+      error,
+    });
+  }
+};
