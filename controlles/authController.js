@@ -19,18 +19,12 @@ exports.createUser = async (req, res) => {
 exports.loginUser = (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email }, (error, user) => {
-    console.log(user)
     if (user) {
       bcrypt.compare(password, user.password, (err, same) => {
         if (same) {
           // USER SESSION STARTS
-          res.status(200).json({
-            status: 'success',
-            user: {
-              name: user.name,
-              email: user.email,
-            },
-          });
+          req.session.userID = user._id;
+          res.status(200).redirect('/');
         } else {
           res.status(400).json({
             status: 'fail',

@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const pageRoute = require('./routes/pageRoutes');
 const courseRoute = require('./routes/courseRoutes');
 const categoryRoute = require('./routes/categoryRoutes');
@@ -22,6 +23,13 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: 'my_keyboard_cat',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // Routes
 app.use('/', pageRoute);
