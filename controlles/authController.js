@@ -35,3 +35,7 @@ exports.loginUser = (req, res) => {
     }
   });
 };
+
+exports.logOutUser = (req, res) => {
+  req.session.destroy(() => res.status(200).redirect('/'));
+};

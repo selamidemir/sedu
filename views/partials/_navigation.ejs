@@ -54,6 +54,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li>
+            <% if ( !userIN ) { %>
             <a
               class="hover-btn-new log"
               href="#"
@@ -61,6 +62,13 @@
               data-target="#login"
               ><span>Book Now</span></a
             >
+            <% } else {%>
+              <a
+              class="hover-btn-new logout"
+              href="/users/logout"
+              ><span>Log Out</span></a
+            >
+            <%  } %>
           </li>
         </ul>
       </div>
