@@ -1,5 +1,6 @@
 const express = require('express');
 const pageController = require('../controlles/pageControllers');
+// const redirectMiddleware = require('../middlewares/redirectMiddleware');
 
 const router = express.Router();
 
