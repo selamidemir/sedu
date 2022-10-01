@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const Category = require('../models/Category');
 
 exports.createUser = async (req, res) => {
   try {
@@ -40,10 +41,13 @@ exports.logOutUser = (req, res) => {
 exports.userDashboardPage = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.session.userID });
+    const categories = await Category.find();
+
     res.status(200).render('dasboard', {
       status: 'success',
       pageName: 'dasboard',
       user,
+      categories
     });
   } catch (error) {
     res.status(400).json({
