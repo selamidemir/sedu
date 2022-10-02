@@ -1,9 +1,15 @@
 const Category = require('../models/Category');
 const Course = require('../models/Course');
+const User = require('../models/User');
 
 exports.createCourse = async (req, res) => {
   try {
-    await Course.create(req.body);
+    const user = await User.findOne({ _id: req.session.userID });
+    console.log(user)
+    await Course.create({
+      ...req.body,
+      user,
+    });
     res.status(201).redirect('/users/dashboard');
   } catch (error) {
     res.status(400).json({
@@ -39,7 +45,7 @@ exports.getAllCourses = async (req, res) => {
 exports.getCourse = async (req, res) => {
   try {
     const slug = req.params.slug;
-    const course = await Course.findOne({ slug: slug });
+    const course = await Course.findOne({ slug: slug }).populate('user');
     const categories = await Category.find();
 
     res.render('course', {
