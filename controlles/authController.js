@@ -19,15 +19,15 @@ exports.loginUser = (req, res) => {
   const { email, password } = req.body;
   User.findOne({ email }, (error, user) => {
     if (user) {
-      bcrypt.compare(password, user.password, (err, same) => {
-        if (same) {
+      bcrypt.compare(password, user.password, (err, result) => {
+        if (result) {
           // USER SESSION STARTS
           req.session.userID = user._id;
           res.status(200).redirect('/users/dashboard');
         } else {
           res.status(400).json({
             status: 'fail',
-            message: "You can't login.",
+            message: "You did not login. " + err + " " + result + ' ' + password,
           });
         }
       });
@@ -41,15 +41,16 @@ exports.logOutUser = (req, res) => {
 
 exports.userDashboardPage = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.session.userID }).populate('courses');
+    const user = await User.findOne({ _id: req.session.userID }).populate(
+      'courses'
+    );
     const categories = await Category.find();
-    const courses = await Course.find({user: req.session.userID});
+    const courses = await Course.find({ user: req.session.userID });
     res.status(200).render('dasboard', {
-      status: 'success',
-      pageName: 'dasboard',
       user,
       categories,
-      courses
+      courses,
+      pageName: 'dasboard',
     });
   } catch (error) {
     res.status(400).json({
