@@ -20,15 +20,29 @@ exports.createCourse = async (req, res) => {
 
 exports.getAllCourses = async (req, res) => {
   try {
-    const filter = {};
+    const filter = {
+      name: '',
+      category: null,
+    };
     const categorySlug = req.query.category;
+    const query = req.query.search;
 
     if (categorySlug) {
       const category = await Category.findOne({ slug: categorySlug });
+
       filter.category = category._id;
+      console.log(filter)
     }
 
-    const courses = await Course.find(filter);
+    if (query) filter.name = query;
+
+    const courses = await Course.find({
+      $or: [
+        { name: { $regex: '.*' + filter.name + '.*', $options: 'i' } },
+        { category: filter.category },
+      ],
+    });
+
     res.status(200).render('courses', {
       courses,
       pageName: 'courses',
@@ -64,7 +78,7 @@ exports.getCourse = async (req, res) => {
 
 exports.enrollCourse = async (req, res) => {
   try {
-    const user = await User.findOne({_id: req.session.userID});
+    const user = await User.findOne({ _id: req.session.userID });
     const course = await Course.findById(req.body.course_id);
     const categories = await Category.find();
     await user.courses.push(course);
