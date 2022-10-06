@@ -9,6 +9,9 @@ exports.createCourse = async (req, res) => {
       ...req.body,
       user,
     });
+
+    req.flahs('success', `The ${req.body.name} course was created successfully`)
+
     res.status(201).redirect('/users/dashboard');
   } catch (error) {
     res.status(400).json({

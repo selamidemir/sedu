@@ -30,7 +30,7 @@ exports.sendMail = async (req, res) => {
       pass: process.env.APP_EMAIL_PASS, // generated ethereal password
     },
   });
-  console.log("bölüm 2")
+
   // send mail with defined transport object
   let info = await transporter.sendMail({
     from: `"Sedu Contact Mail" <${process.env.APP_EMAIL_USER}>`, // sender address
@@ -39,7 +39,7 @@ exports.sendMail = async (req, res) => {
     html: message,
   });
 
-  console.log('Message sent: %s', info.messageId);
+  req.flahs('success', 'We Recevied Your Messages Successfully');
 
   res.redirect('/contact');
 };

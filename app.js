@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
+
 const pageRoute = require('./routes/pageRoutes');
 const courseRoute = require('./routes/courseRoutes');
 const categoryRoute = require('./routes/categoryRoutes');
@@ -35,11 +37,18 @@ app.use(
     store: MongoStore.create({ mongoUrl: 'mongodb://localhost/sedu-db' }),
   })
 );
+app.use(flash())
 // Tüm istekler geldiğinde herhangi bir kullanıcı girişi
 // var mı kontrol et.
 app.use('*', (req, res, next) => {
   userIN = req.session.userID;
   next(); // Sonraki middleware geç
+});
+
+// Flash messages
+app.use((req, res, next) => {
+  res.locals.flahsMessages = req.flash();
+  next();
 });
 
 // Routes

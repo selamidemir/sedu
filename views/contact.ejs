@@ -25,6 +25,11 @@
 
     <div class="row">
       <div class="col-xl-6 col-md-12 col-sm-12">
+        <% if(flahsMessages.success) { %>
+        <div class="alert alert-success">
+          {flahsMessages.success}
+        </div>
+        <% } %>
         <div class="contact_form">
           <div id="message"></div>
           <form
