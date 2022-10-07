@@ -47,7 +47,7 @@ app.use('*', (req, res, next) => {
 
 // Flash messages
 app.use((req, res, next) => {
-  res.locals.flahsMessages = req.flash();
+  res.locals.flashMessages = req.flash();
   next();
 });
 

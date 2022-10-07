@@ -57,6 +57,11 @@
 				<!-- Tab panes -->
 				<div class="tab-content">
 					<div class="tab-pane active" id="Login">
+						<% if(flashMessages.error) { %>
+							<div class="alert alert-danger">
+							  <%= flashMessages.error %>
+							</div>
+						<% } %>
 						<form action='/users/login' role="form" method='post' class="form-horizontal">
 							<div class="form-group">
 								<div class="col-sm-12">
@@ -79,6 +84,11 @@
 						</form>
 					</div>
 					<div class="tab-pane" id="Registration">
+						<% if(flashMessages.error) { %>
+							<div class="alert alert-danger">
+							  <%= flashMessages.error %>
+							</div>
+						<% } %>
 						<form action="users" method="POST" role="form" class="form-horizontal">
 							<div class="form-group">
 								<div class="col-sm-12">

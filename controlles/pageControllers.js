@@ -39,7 +39,7 @@ exports.sendMail = async (req, res) => {
     html: message,
   });
 
-  req.flahs('success', 'We Recevied Your Messages Successfully');
+  req.flash('success', 'We Recevied Your Messages Successfully');
 
   res.redirect('/contact');
 };
