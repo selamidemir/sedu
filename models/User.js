@@ -30,8 +30,15 @@ const UserSchema = Schema({
 });
 
 UserSchema.pre('save', function (next) {
-  let user = this;
+  const user = this;
+  // Eğer kullanıcının şifresi güncellenmedi
+  // farklı özellikleri güncellendi ise geri dön
+  if(!user.isModified('password')) return next();
+
+  // Yeni kullanıcı oluşturuldu veya şifre güncellendi
+  // ise şifreyi şifrele
   bcrypt.hash(user.password, 10, (error, hash) => {
+    if(error) return next(error);
     user.password = hash;
     next();
   });

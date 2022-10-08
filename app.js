@@ -4,11 +4,13 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
+const methodOverride = require('method-override');
 
 const pageRoute = require('./routes/pageRoutes');
 const courseRoute = require('./routes/courseRoutes');
 const categoryRoute = require('./routes/categoryRoutes');
 const userRoute = require('./routes/userRoutes');
+const { use } = require('./routes/userRoutes');
 
 dotenv.config();
 
@@ -37,7 +39,7 @@ app.use(
     store: MongoStore.create({ mongoUrl: 'mongodb://localhost/sedu-db' }),
   })
 );
-app.use(flash())
+app.use(flash());
 // Tüm istekler geldiğinde herhangi bir kullanıcı girişi
 // var mı kontrol et.
 app.use('*', (req, res, next) => {
@@ -50,6 +52,12 @@ app.use((req, res, next) => {
   res.locals.flashMessages = req.flash();
   next();
 });
+
+app.use(
+  methodOverride('_method', {
+    methods: ['POST', 'GET'],
+  })
+);
 
 // Routes
 app.use('/', pageRoute);

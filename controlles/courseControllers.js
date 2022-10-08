@@ -10,7 +10,10 @@ exports.createCourse = async (req, res) => {
       user,
     });
 
-    req.flahs('success', `The ${req.body.name} course was created successfully`)
+    req.flash(
+      'success',
+      `The ${req.body.name} course was created successfully`
+    );
 
     res.status(201).redirect('/users/dashboard');
   } catch (error) {
@@ -34,7 +37,7 @@ exports.getAllCourses = async (req, res) => {
       const category = await Category.findOne({ slug: categorySlug });
 
       filter.category = category._id;
-      console.log(filter)
+      console.log(filter);
     }
 
     if (query) filter.name = query;
@@ -115,6 +118,39 @@ exports.releaseCourse = async (req, res) => {
       categories,
       pageName: 'course',
     });
+  } catch (error) {
+    res.json({
+      status: 'fail',
+      error,
+    });
+  }
+};
+
+exports.deleteCourse = async (req, res) => {
+  try {
+    const course = await Course.findOneAndRemove({ slug: req.params.slug });
+    req.flash('success', `The ${course.name} course removed successfully`);
+    res.redirect('/users/dashboard');
+  } catch (error) {
+    res.json({
+      status: 'fail',
+      error,
+    });
+  }
+};
+
+exports.updateCourse = async (req, res) => {
+  try {
+    const course = await Course.findOne({ slug: req.params.slug });
+    console.log(course.name)
+    course.name = req.body.name;
+    course.description = req.body.description;
+    course.category = req.body.category;
+    course.save();
+
+    req.flash('success', `The ${course.name} course was updated successfully`);
+
+    res.redirect('/users/dashboard');
   } catch (error) {
     res.json({
       status: 'fail',
