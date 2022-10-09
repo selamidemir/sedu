@@ -22,6 +22,7 @@ router.route('/').post(
 );
 router.route('/login').post(authController.loginUser);
 router.route('/logout').get(authController.logOutUser);
+router.route('/:id').delete(authController.deleteUser);
 router
   .route('/dashboard')
   .get(authMiddleware, authController.userDashboardPage);
